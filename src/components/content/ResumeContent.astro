@@ -37,12 +37,21 @@ const education = [
     institution: t(lang, "education.degree1.institution"),
     period: t(lang, "education.degree1.period"),
     description: t(lang, "education.degree1.description"),
+    logo: "/photos/logo-uned.avif",
+  },
+  {
+    title: "Bachillerato Biológico",
+    institution: "IES Alpajes",
+    period: "2020 - 2022",
+    description: "Bachillerato en la modalidad de Ciencias, rama Biológica.",
+    logo: "/photos/logo-alpajes.avif",
   },
   {
     title: t(lang, "education.degree2.title"),
     institution: t(lang, "education.degree2.institution"),
     period: t(lang, "education.degree2.period"),
     description: t(lang, "education.degree2.description"),
+    logo: "/photos/logo-domenico.avif",
   },
 ];
 ---
@@ -173,13 +182,23 @@ const education = [
         <div class="space-y-6">
           {education.map((edu) => (
             <div class="rounded-xl border-l-4 border-l-accent border border-border bg-card overflow-hidden">
-              <div class="p-6">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                  <h3 class="text-xl font-bold">{edu.title}</h3>
-                  <span class="text-sm text-muted-foreground">{edu.period}</span>
+              <div class="p-6 flex items-start gap-4">
+                {edu.logo && (
+                  <img
+                    src={edu.logo}
+                    alt={`${edu.institution} logo`}
+                    class="w-12 h-12 rounded-lg object-cover shrink-0 mt-1"
+                    loading="lazy"
+                  />
+                )}
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                    <h3 class="text-xl font-bold">{edu.title}</h3>
+                    <span class="text-sm text-muted-foreground whitespace-nowrap">{edu.period}</span>
+                  </div>
+                  <p class="text-[hsl(var(--accent))] font-semibold mb-4">{edu.institution}</p>
+                  <p class="text-muted-foreground leading-relaxed">{edu.description}</p>
                 </div>
-                <p class="text-[hsl(var(--accent))] font-semibold mb-4">{edu.institution}</p>
-                <p class="text-muted-foreground leading-relaxed">{edu.description}</p>
               </div>
             </div>
           ))}
