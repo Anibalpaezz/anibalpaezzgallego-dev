@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Nav from "@/components/Nav.astro";
+import Footer from "@/components/Footer.astro";
+import BlogPage from "@/react/BlogPage";
+---
+
+<BaseLayout lang="es">
+  <Nav lang="es" slot="nav" />
+  <BlogPage client:idle />
+  <Footer lang="es" slot="footer" />
+</BaseLayout>

@@ -1,0 +1,244 @@
+/* ── 1. Importación base de Tailwind v4 ── */
+@import "tailwindcss";
+
+/* ── 2. Mapa de variables para que Tailwind las reconozca como clases ── */
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-light: hsl(var(--primary-light));
+  --color-primary-dark: hsl(var(--primary-dark));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-light: hsl(var(--accent-light));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Registramos tus sombras y brillos personalizados */
+  --shadow-glow: var(--shadow-glow);
+}
+
+/* ── 3. Valores HSL exactos de tu paleta original ── */
+:root {
+  --background: 0 0% 100%;
+  --foreground: 240 10% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 10%;
+  --primary: 250 70% 55%;
+  --primary-foreground: 0 0% 100%;
+  --primary-light: 250 70% 65%;
+  --primary-dark: 250 70% 45%;
+  --secondary: 240 5% 96%;
+  --secondary-foreground: 240 10% 10%;
+  --muted: 240 5% 96%;
+  --muted-foreground: 240 4% 46%;
+  --accent: 15 85% 60%;
+  --accent-foreground: 0 0% 100%;
+  --accent-light: 15 85% 70%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 240 6% 90%;
+  --input: 240 6% 90%;
+  --ring: 250 70% 55%;
+  --radius: 0.75rem;
+
+  /* Guardamos tus gradientes nativos */
+  --gradient-primary: linear-gradient(135deg, hsl(260 70% 55%), hsl(240 70% 60%));
+  --gradient-accent: linear-gradient(135deg, hsl(15 85% 60%), hsl(30 90% 65%));
+  --gradient-subtle: linear-gradient(180deg, hsl(240 5% 98%), hsl(240 5% 96%));
+  --shadow-glow: 0 0 30px hsl(250 70% 55% / 0.3);
+}
+
+/* Variables para el modo oscuro */
+.dark {
+  --background: 240 10% 8%;
+  --foreground: 0 0% 98%;
+  --card: 240 8% 12%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 8% 12%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 250 70% 60%;
+  --primary-foreground: 0 0% 100%;
+  --primary-light: 250 70% 70%;
+  --primary-dark: 250 70% 50%;
+  --secondary: 240 4% 16%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 65%;
+  --accent: 15 85% 55%;
+  --accent-foreground: 0 0% 100%;
+  --accent-light: 15 85% 65%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 240 4% 20%;
+  --input: 240 4% 20%;
+  --ring: 250 70% 60%;
+  --gradient-primary: linear-gradient(135deg, hsl(260 70% 60%), hsl(240 70% 65%));
+  --gradient-accent: linear-gradient(135deg, hsl(15 85% 55%), hsl(30 90% 60%));
+  --gradient-subtle: linear-gradient(180deg, hsl(240 8% 10%), hsl(240 8% 12%));
+  --shadow-glow: 0 0 40px hsl(250 70% 60% / 0.4);
+}
+
+/* ── 4. Estilos globales de etiquetas nativas ── */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  transition: color 0.3s, background-color 0.3s;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+
+/* ── 5. Clases Utilitarias Personalizadas (Tu Diseño Original) ── */
+
+/* El degradado de tu nombre */
+.gradient-text {
+  background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary-light)), hsl(var(--accent)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Fondos degradados y brillos */
+.bg-gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.bg-gradient-accent {
+  background: var(--gradient-accent);
+}
+
+.shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+/* Capa 1: El fondo difuminado (Mesh Gradient) */
+.hero-mesh-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%,  hsl(250 70% 60% / 0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80%  60%,  hsl(220 80% 55% / 0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 10%  70%,  hsl(260 60% 50% / 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .hero-mesh-bg {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%,  hsl(250 70% 60% / 0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80%  60%,  hsl(220 80% 55% / 0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 10%  70%,  hsl(260 60% 50% / 0.10) 0%, transparent 60%);
+}
+
+/* Capa 2: La cuadrícula técnica (Grid Overlay) */
+.hero-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(hsl(240 10% 50% / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(240 10% 50% / 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 75%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 75%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .hero-grid-overlay {
+  background-image:
+    linear-gradient(hsl(240 20% 80% / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(240 20% 80% / 0.05) 1px, transparent 1px);
+}
+
+/* ── 6. Animaciones de Entrada ── */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── 7. Scroll-reveal (intersección) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── 8. Badge glow (Open to Work) ── */
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(142 72% 50% / 0.4); }
+  50%       { box-shadow: 0 0 0 6px hsl(142 72% 50% / 0); }
+}
+
+.badge-open-to-work {
+  animation: badgeGlow 2.4s ease-in-out infinite;
+}
+
+/* ── 9. Line clamp (fallback para Tailwind v4) ── */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

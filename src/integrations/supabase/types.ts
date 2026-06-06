@@ -1,0 +1,78 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export type Database = {
+  __InternalSupabase: {
+    PostgrestVersion: "13.0.5"
+  }
+  public: {
+    Tables: {
+      contacts: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          subject: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          subject?: string
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type PublicSchema = Database["public"]
+
+export type Tables<
+  T extends keyof PublicSchema["Tables"] | keyof PublicSchema["Views"]
+> = T extends keyof PublicSchema["Tables"]
+  ? PublicSchema["Tables"][T]["Row"]
+  : T extends keyof PublicSchema["Views"]
+    ? PublicSchema["Views"][T]["Row"]
+    : never
+
+export type TablesInsert<T extends keyof PublicSchema["Tables"]> =
+  PublicSchema["Tables"][T]["Insert"]
+
+export type TablesUpdate<T extends keyof PublicSchema["Tables"]> =
+  PublicSchema["Tables"][T]["Update"]
+
+export type Enums<T extends keyof PublicSchema["Enums"]> =
+  PublicSchema["Enums"][T]
+
+export type CompositeTypes<T extends keyof PublicSchema["CompositeTypes"]> =
+  PublicSchema["CompositeTypes"][T]

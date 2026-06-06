@@ -1,0 +1,74 @@
+---
+import "../styles/global.css";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  lang?: "es" | "en" | "fr" | "de" | "zh";
+}
+
+const { lang = "es" } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{Astro.props.title || "Aníbal Páez Gallego — Full-Stack Developer"}</title>
+    <meta name="description" content={Astro.props.description || "Portfolio de Aníbal Páez Gallego, desarrollador web full-stack especializado en React, TypeScript, Node.js y PostgreSQL."} />
+    <meta name="author" content="Aníbal Páez Gallego" />
+
+    <meta property="og:title" content={Astro.props.title || "Aníbal Páez Gallego — Full-Stack Developer"} />
+    <meta property="og:description" content={Astro.props.description || "Desarrollador full-stack especializado en React, TypeScript, Node.js y PostgreSQL."} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=630&fit=crop" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" /></noscript>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <script is:inline>
+      (function () {
+        var theme = localStorage.getItem("theme") || "dark";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(theme);
+        var lang = localStorage.getItem("language") || "es";
+        document.documentElement.lang = lang;
+      })();
+    </script>
+
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen bg-background text-foreground antialiased">
+    <slot name="nav" />
+    <main id="main-content">
+      <slot />
+    </main>
+    <slot name="footer" />
+
+    <div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 z-50 p-4 animate-slide-up">
+      <div class="max-w-3xl mx-auto bg-card border border-border rounded-xl shadow-lg px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <p class="text-sm text-muted-foreground flex-1 leading-relaxed">
+          Usamos cookies para guardar tus preferencias de idioma y tema. No se comparten datos con terceros.
+        </p>
+        <div class="flex gap-2 shrink-0">
+          <button id="cookie-decline" class="rounded-lg border border-border px-4 py-1.5 text-xs font-medium hover:bg-secondary transition-colors">Rechazar</button>
+          <button id="cookie-accept" class="rounded-lg bg-gradient-primary text-white px-4 py-1.5 text-xs font-medium hover:opacity-90 transition-opacity">Aceptar</button>
+        </div>
+      </div>
+    </div>
+
+    <button id="scroll-top" class="hidden fixed bottom-6 right-6 z-50 items-center justify-center rounded-full bg-primary hover:bg-primary/90 shadow-lg transition-all animate-fade-in w-10 h-10" aria-label="Volver arriba">
+      <svg class="h-5 w-5 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+    </button>
+
+    <script>
+      import "@/scripts/app";
+    </script>
+  </body>
+</html>

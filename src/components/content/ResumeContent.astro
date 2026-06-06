@@ -1,0 +1,268 @@
+---
+import { t } from "@/lib/t";
+
+export interface Props {
+  lang: "es" | "en" | "fr" | "de" | "zh";
+}
+
+const { lang } = Astro.props;
+
+const workExperience = [
+  {
+    title: t(lang, "work_experience1.title"),
+    company: "Telepizza",
+    period: "2023 - Presente",
+    description: t(lang, "work_experience1.description"),
+  },
+  {
+    title: t(lang, "work_experience2.title"),
+    company: "Aytec S.L",
+    period: "2024",
+    description: t(lang, "work_experience2.description"),
+  },
+];
+
+const education = [
+  {
+    title: t(lang, "education.degree1.title"),
+    institution: t(lang, "education.degree1.institution"),
+    period: t(lang, "education.degree1.period"),
+    description: t(lang, "education.degree1.description"),
+  },
+  {
+    title: t(lang, "education.degree2.title"),
+    institution: t(lang, "education.degree2.institution"),
+    period: t(lang, "education.degree2.period"),
+    description: t(lang, "education.degree2.description"),
+  },
+];
+---
+
+<div class="min-h-screen py-24">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto text-center mb-12 animate-fade-in">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">{t(lang, "resume.title")}</h1>
+      <p class="text-xl text-muted-foreground mb-8">{t(lang, "resume.subtitle")}</p>
+
+      <div
+        id="captcha-modal-container"
+        class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in"
+        onclick="if (event.target === event.currentTarget) document.getElementById('captcha-modal-container').classList.add('hidden')"
+      >
+        <div class="relative bg-background border rounded-2xl shadow-2xl p-8 w-full max-w-sm mx-4">
+          <button
+            onclick="document.getElementById('captcha-modal-container').classList.add('hidden')"
+            class="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Cerrar"
+          >
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+
+          <div class="flex flex-col items-center text-center mb-6">
+            <div class="p-3 bg-primary/10 rounded-full mb-3">
+              <svg class="h-8 w-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+            </div>
+            <h2 class="text-xl font-bold">Verificación rápida</h2>
+            <p class="text-sm text-muted-foreground mt-1">Resuelve el siguiente cálculo para descargar el CV</p>
+          </div>
+
+          <div id="captcha-body">
+            <div class="bg-secondary rounded-xl py-5 text-center mb-5">
+              <span id="captcha-question" class="text-4xl font-mono font-bold tracking-widest">? + ? = ?</span>
+            </div>
+
+            <input
+              id="captcha-input"
+              type="number"
+              placeholder="Tu respuesta..."
+              autofocus
+              class="w-full rounded-lg border border-input px-4 py-3 text-center text-lg font-semibold bg-background outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 transition-colors"
+            />
+
+            <div id="captcha-error" class="hidden items-center gap-2 mt-2 text-sm text-destructive">
+              <svg class="h-4 w-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span id="captcha-error-text">Respuesta incorrecta.</span>
+            </div>
+
+            <div id="captcha-locked" class="hidden text-center py-4">
+              <svg class="h-10 w-10 text-destructive mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4.5c-.77-.833-2.694-.833-3.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" /></svg>
+              <p class="text-sm text-destructive font-medium">Demasiados intentos fallidos.</p>
+              <p class="text-xs text-muted-foreground mt-1">Recarga la página para volver a intentarlo.</p>
+            </div>
+
+            <div id="captcha-buttons" class="flex gap-3 mt-5">
+              <button
+                onclick="window.__refreshCaptcha()"
+                class="flex-1 rounded-lg border border-border px-4 py-2.5 text-sm font-medium hover:bg-secondary transition-colors"
+              >
+                Otro cálculo
+              </button>
+              <button
+                onclick="window.__verifyCaptcha()"
+                class="flex-1 rounded-lg bg-gradient-primary text-white px-4 py-2.5 text-sm font-medium hover:opacity-90 transition-opacity"
+                id="captcha-submit"
+              >
+                Verificar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        onclick="window.__openCaptcha()"
+        class="inline-flex items-center justify-center rounded-lg bg-gradient-primary hover:opacity-90 transition-opacity px-8 py-3 text-sm font-medium text-white"
+      >
+        <svg class="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+        {t(lang, "resume.download")}
+      </button>
+    </div>
+
+    <div class="max-w-4xl mx-auto space-y-12">
+      <section class="animate-slide-up">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="p-2 bg-primary rounded-lg">
+            <svg class="h-6 w-6 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.193 23.193 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </div>
+          <h2 class="text-3xl font-bold">{t(lang, "resume.experience")}</h2>
+        </div>
+
+        <div class="space-y-6">
+          {workExperience.map((job) => (
+            <div class="rounded-xl border-l-4 border-l-primary border border-border bg-card overflow-hidden">
+              <div class="p-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                  <h3 class="text-xl font-bold">{job.title}</h3>
+                  <span class="text-sm text-muted-foreground">{job.period}</span>
+                </div>
+                <p class="text-primary font-semibold mb-4">{job.company}</p>
+                <p class="text-muted-foreground leading-relaxed">{job.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="animate-slide-up" style="animation-delay:0.1s">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="p-2 bg-primary rounded-lg">
+            <svg class="h-6 w-6 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5z" /><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" /></svg>
+          </div>
+          <h2 class="text-3xl font-bold">{t(lang, "resume.education")}</h2>
+        </div>
+
+        <div class="space-y-6">
+          {education.map((edu) => (
+            <div class="rounded-xl border-l-4 border-l-accent border border-border bg-card overflow-hidden">
+              <div class="p-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                  <h3 class="text-xl font-bold">{edu.title}</h3>
+                  <span class="text-sm text-muted-foreground">{edu.period}</span>
+                </div>
+                <p class="text-[hsl(var(--accent))] font-semibold mb-4">{edu.institution}</p>
+                <p class="text-muted-foreground leading-relaxed">{edu.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const MAX_ATTEMPTS = 5;
+  let challenge = { a: 0, b: 0, answer: 0, op: "+" };
+  let attempts = 0;
+  let locked = false;
+
+  function generate() {
+    const ops = ["+", "-", "*"];
+    const op = ops[Math.floor(Math.random() * ops.length)];
+    let a, b, answer;
+    switch (op) {
+      case "+": a = Math.floor(Math.random() * 20) + 1; b = Math.floor(Math.random() * 20) + 1; answer = a + b; break;
+      case "-": a = Math.floor(Math.random() * 20) + 10; b = Math.floor(Math.random() * 10) + 1; answer = a - b; break;
+      case "*": a = Math.floor(Math.random() * 9) + 2; b = Math.floor(Math.random() * 9) + 2; answer = a * b; break;
+    }
+    const symbols: Record<string, string> = { "+": "+", "-": "−", "*": "×" };
+    return { a, b, answer, question: `${a} ${symbols[op]} ${b}` };
+  }
+
+  function refresh() {
+    if (locked) return;
+    challenge = generate();
+    const qEl = document.getElementById("captcha-question");
+    if (qEl) qEl.textContent = challenge.question + " = ?";
+    const input = document.getElementById("captcha-input") as HTMLInputElement;
+    if (input) { input.value = ""; input.disabled = false; }
+    document.getElementById("captcha-error")?.classList.add("hidden");
+    document.getElementById("captcha-submit")?.removeAttribute("disabled");
+  }
+
+  window.__openCaptcha = function () {
+    const container = document.getElementById("captcha-modal-container");
+    const lockedEl = document.getElementById("captcha-locked");
+    const body = document.getElementById("captcha-body");
+    if (!container) return;
+    attempts = 0;
+    locked = false;
+    if (lockedEl) lockedEl.classList.add("hidden");
+    if (body) body.classList.remove("hidden");
+    container.classList.remove("hidden");
+    refresh();
+    setTimeout(() => {
+      const input = document.getElementById("captcha-input") as HTMLInputElement;
+      if (input) input.focus();
+    }, 100);
+  };
+
+  window.__refreshCaptcha = refresh;
+
+  window.__verifyCaptcha = function () {
+    if (locked) return;
+    const input = document.getElementById("captcha-input") as HTMLInputElement;
+    const val = parseInt(input?.value || "", 10);
+    if (val === challenge.answer) {
+      window.__triggerDownload();
+      document.getElementById("captcha-modal-container")?.classList.add("hidden");
+    } else {
+      attempts++;
+      document.getElementById("captcha-error")?.classList.remove("hidden");
+      const errorText = document.getElementById("captcha-error-text");
+      if (errorText) {
+        const remaining = MAX_ATTEMPTS - attempts;
+        errorText.textContent = `Respuesta incorrecta. (${remaining} intento${remaining !== 1 ? "s" : ""} restante${remaining !== 1 ? "s" : ""})`;
+      }
+      if (input) input.value = "";
+      if (attempts >= MAX_ATTEMPTS) {
+        locked = true;
+        document.getElementById("captcha-body")?.classList.add("hidden");
+        document.getElementById("captcha-locked")?.classList.remove("hidden");
+      } else if (attempts >= 2) {
+        refresh();
+      }
+    }
+  };
+
+  window.__triggerDownload = async function () {
+    try {
+      const res = await fetch("/CV_Anibal_Paez_Gallego.pdf");
+      if (!res.ok) throw new Error("fetch failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "CV_Anibal_Paez_Gallego.pdf";
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    } catch {
+      window.open("/CV_Anibal_Paez_Gallego.pdf", "_blank");
+    }
+  };
+})();
+</script>

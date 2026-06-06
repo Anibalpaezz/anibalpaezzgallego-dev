@@ -1,0 +1,134 @@
+---
+import { t } from "@/lib/t";
+
+export interface Props {
+  lang: "es" | "en" | "fr" | "de" | "zh";
+}
+
+const { lang } = Astro.props;
+
+const skills = [
+  { name: "React", url: "https://react.dev/" },
+  { name: "TypeScript", url: "https://www.typescriptlang.org/" },
+  { name: "Node.js", url: "https://nodejs.org/" },
+  { name: "Next.js", url: "https://nextjs.org/" },
+  { name: "Tailwind CSS", url: "https://tailwindcss.com/" },
+  { name: "PostgreSQL", url: "https://www.postgresql.org/" },
+  { name: "Supabase", url: "https://supabase.com/" },
+  { name: "Git", url: "https://git-scm.com/" },
+  { name: "Python", url: "https://www.python.org/" },
+  { name: "PHP", url: "https://www.php.net/" },
+  { name: "HTML", url: "https://developer.mozilla.org/docs/Web/HTML" },
+  { name: "Linux", url: "https://www.kernel.org/" },
+  { name: "CSS", url: "https://developer.mozilla.org/docs/Web/CSS" },
+  { name: "JavaScript", url: "https://developer.mozilla.org/docs/Web/JavaScript" },
+  { name: "C++", url: "https://isocpp.org/" },
+  { name: "Java", url: "https://www.oracle.com/java/" },
+  { name: "MySQL", url: "https://www.mysql.com/" },
+  { name: "MongoDB", url: "https://www.mongodb.com/" },
+];
+---
+
+<div class="min-h-screen py-16 md:py-24">
+  <div class="container mx-auto px-4 md:px-8">
+    <div class="max-w-3xl mx-auto text-center mb-12 animate-fade-in">
+      <h1 class="text-3xl md:text-5xl font-bold mb-4 tracking-tight">{t(lang, "about.title")}</h1>
+      <p class="text-base md:text-lg text-muted-foreground leading-relaxed">{t(lang, "about.subtitle")}</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-10">
+      <div class="animate-slide-up rounded-xl border-2 border-primary/40 bg-gradient-to-br from-primary/5 to-accent/5 p-8" style="animation-delay:0.05s">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-2 bg-primary rounded-lg">
+            <svg class="h-6 w-6 text-primary-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>
+          </div>
+          <h2 class="text-2xl font-bold">{t(lang, "about.dbTitle")}</h2>
+        </div>
+        <p class="text-muted-foreground mb-5 leading-relaxed">{t(lang, "about.dbDescription")}</p>
+        <div class="flex flex-wrap gap-2">
+          {["SQL", "PostgreSQL", "MySQL", "MongoDB"].map((tech) => (
+            <span class="inline-flex items-center px-4 py-1.5 text-sm rounded-full bg-primary/10 text-primary border border-primary/30 transition-colors">{tech}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-12">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {[
+          { icon: "code", value: `${skills.length}+`, label: t(lang, "about.statsTech") },
+          { icon: "server", value: "SQL · Backend", label: t(lang, "about.statsFocus") },
+          { icon: "book", value: "DAW + Ing.", label: t(lang, "about.statsFormation") },
+        ].map((s, i) => (
+          <div class="animate-slide-up text-center rounded-xl border border-border bg-card p-6" style={`animation-delay:${0.1 + i * 0.05}s`}>
+            <div class="flex justify-center mb-2">
+              {s.icon === "code" && (
+                <svg class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+              )}
+              {s.icon === "server" && (
+                <svg class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
+              )}
+              {s.icon === "book" && (
+                <svg class="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+              )}
+            </div>
+            <p class="text-2xl font-bold gradient-text">{s.value}</p>
+            <p class="text-sm text-muted-foreground mt-1">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-16">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6 text-center tracking-tight">{t(lang, "about.skills")}</h2>
+      <div class="animate-slide-up rounded-xl border border-border bg-card p-4 md:p-8" style="animation-delay:0.1s">
+        <div class="flex flex-wrap gap-3 justify-center">
+          {skills.map((skill) => (
+            <a
+              href={skill.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-4 py-2 text-sm rounded-full bg-secondary text-secondary-foreground transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.02] hover:bg-primary hover:text-primary-foreground"
+            >
+              {skill.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto mb-16">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="p-2 bg-foreground rounded-lg">
+          <svg viewBox="0 0 24 24" class="h-6 w-6 text-background" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </div>
+        <h2 class="text-3xl font-bold">{t(lang, "about.githubTitle")}</h2>
+      </div>
+
+      <div class="animate-slide-up overflow-hidden rounded-xl border border-border bg-card p-2 sm:p-4" style="animation-delay:0.2s">
+        <img
+          src={`https://github-readme-activity-graph.vercel.app/graph?username=Anibalpaezz&theme=react-dark&hide_border=true&area=true&custom_title=Actividad+en+GitHub`}
+          alt="GitHub contribution graph"
+          class="w-full rounded-lg"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="text-center mt-6">
+        <a
+          href="https://github.com/Anibalpaezz"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          github.com/Anibalpaezz
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
