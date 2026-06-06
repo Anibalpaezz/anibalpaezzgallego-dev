@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 export interface Props {
   title?: string;
@@ -44,6 +45,7 @@ const { lang = "es" } = Astro.props;
     </script>
 
     <Analytics />
+    <SpeedInsights />
     <slot name="head" />
   </head>
   <body class="min-h-screen bg-background text-foreground antialiased">
