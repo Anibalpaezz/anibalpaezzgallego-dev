@@ -9,16 +9,25 @@ const { lang } = Astro.props;
 
 const workExperience = [
   {
-    title: t(lang, "work_experience1.title"),
-    company: "Telepizza",
-    period: "2023 - Presente",
-    description: t(lang, "work_experience1.description"),
+    title: "Desarrollador Junior — BBVA CIB",
+    company: "Arktic",
+    period: "Junio 2026 - Actualidad",
+    description: "Desarrollador full-stack en Banco BBVA, trabajando con React, TypeScript, Node.js y PostgreSQL en un entorno corporativo de alto volumen.",
+    logo: "/photos/logo-arktic.avif",
   },
   {
     title: t(lang, "work_experience2.title"),
-    company: "Aytec S.L",
-    period: "2024",
+    company: "Aytec Digital",
+    period: "Febrero 2024 - Julio 2024",
     description: t(lang, "work_experience2.description"),
+    logo: "/photos/logo-aytec.avif",
+  },
+  {
+    title: t(lang, "work_experience1.title"),
+    company: "Telepizza",
+    period: "Junio 2023 - Junio 2026",
+    description: t(lang, "work_experience1.description"),
+    logo: "/photos/logo-telepizza.avif",
   },
 ];
 
@@ -130,13 +139,23 @@ const education = [
         <div class="space-y-6">
           {workExperience.map((job) => (
             <div class="rounded-xl border-l-4 border-l-primary border border-border bg-card overflow-hidden">
-              <div class="p-6">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                  <h3 class="text-xl font-bold">{job.title}</h3>
-                  <span class="text-sm text-muted-foreground">{job.period}</span>
+              <div class="p-6 flex items-start gap-4">
+                {job.logo && (
+                  <img
+                    src={job.logo}
+                    alt={`${job.company} logo`}
+                    class="w-12 h-12 rounded-lg object-cover shrink-0 mt-1"
+                    loading="lazy"
+                  />
+                )}
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
+                    <h3 class="text-xl font-bold">{job.title}</h3>
+                    <span class="text-sm text-muted-foreground whitespace-nowrap">{job.period}</span>
+                  </div>
+                  <p class="text-primary font-semibold mb-4">{job.company}</p>
+                  <p class="text-muted-foreground leading-relaxed">{job.description}</p>
                 </div>
-                <p class="text-primary font-semibold mb-4">{job.company}</p>
-                <p class="text-muted-foreground leading-relaxed">{job.description}</p>
               </div>
             </div>
           ))}
